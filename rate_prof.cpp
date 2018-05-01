@@ -14,7 +14,6 @@ class Professor {
 public:
     string name;
     double Diff_level;
-//    string dept;
     double new_Diff_level;
     int student_num;
     string dept_name;
@@ -61,8 +60,8 @@ int main()
     cout << "1 check a professor's rating" << endl;
     cout << "2 rate a professor" <<endl;
     cout << "3 create a professor" <<endl;
-    cout << "4 quit the programm" << endl;
-    cout << "5 display professor from low to high" << endl;
+    cout << "4 dispaly professor from low to high" << endl;
+    cout << "5 quit the programm" << endl;
     cout << " "<< endl;
     cin >> input;
     if (input == 1)
@@ -72,9 +71,9 @@ int main()
     else if (input == 3)
 	    create();
     else if (input == 4)
-	    exit(0);
-    else if (input == 5)
 	    low2high();
+    else if (input == 5)
+	    exit(0);
     else
 	    cout <<"Invalid input, please enter a number from 1 to 5." << endl;
 	
@@ -115,14 +114,12 @@ void check()
 	{
 		if (search_name == name)
 		{
-//			cout << "professor found" << endl;
-//			cout << name << " " << Diff_level << " || Rated by " << student_num << " students."<<endl;
+		cout << "professor found" << endl;
+		cout << name << " " << Diff_level << " || Rated by " << student_num << " students."<<endl;
 			status = 1;
 			
 		}
 	}
-	cout << name << " " << Diff_level << " || Rated by " << student_num << " students."<<endl;
-	cout << " " << endl;
 	if(status == 0)
 	{
 		cout<<"prof not found"<< endl;
@@ -155,7 +152,7 @@ void rate()
 			
 			Professor newProf(name, Diff_level, student_num,dept_name);
 			cout << newProf.name << " " << newProf.Diff_level<< endl;
-			ss << newProf.name << " " <<newProf.Diff_level<< " " <<newProf.student_num;
+			ss << newProf.name << " " << newProf.dept_name<< " " <<newProf.Diff_level<< " " <<newProf.student_num;
 			line2del = ss.str();
 			linedel(line2del);
 			cout << "enter your rating"<< endl;
@@ -213,21 +210,44 @@ void low2high()
 	string name;
 	double Diff_level;
 	int student_num;
-	set<Professor> ProfSet;
-	int i = 1;
+	string dept;
 
+	cout<< "whcih department would you like to see?"<<endl;
+	cout<< "enter ALL for all department" <<endl; 
+	cin >> dept;
+
+	set<Professor> ProfSet;
 	
 	ifstream file;
 	file.open("cooper_prof.txt");
-	while(file >> name >> dept_name >> Diff_level >> student_num)
+	if (dept == "All")
 	{
-		Professor nam(name, Diff_level, student_num, dept_name);
-		ProfSet.insert(nam);
-	}
+		while(file >> name >> dept_name >> Diff_level >> student_num)
+		{
+			Professor inset(name, Diff_level, student_num, dept_name);
+			ProfSet.insert(inset);
+		}
 
-	for (auto it=ProfSet.begin(); it!=ProfSet.end(); ++it)
+		for (auto it=ProfSet.begin(); it!=ProfSet.end(); ++it)
+		{
+			cout<<it->name << " " <<it->Diff_level <<endl;
+		}
+	}
+	else
 	{
-		cout<<it->name << " " <<it->Diff_level <<endl;
+		while(file >> name >> dept_name >> Diff_level >> student_num)
+		{
+			if(dept == dept_name)
+			{
+				Professor inset(name, Diff_level, student_num, dept_name);
+				ProfSet.insert(inset);
+			}
+		}
+		for (auto it=ProfSet.begin(); it!=ProfSet.end(); ++it)
+		{
+			cout << it->name <<" " <<it->dept_name<< " " <<it -> Diff_level <<endl;
+		}
 	}
 	main();
 }
+
