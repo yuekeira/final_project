@@ -4,6 +4,9 @@
 #include <sstream>
 using namespace std;
 
+int status;
+int input;
+
 class Professor {
 
 public:
@@ -27,7 +30,6 @@ int main()
     string prof_name;
     double Diff_level;
     string dept;
-    int input;
     int student_num = 1;
     double new_Diff_level;
 
@@ -71,6 +73,7 @@ void create()
 
 void check()
 {
+	status = 0;
 	ifstream file("cooper_prof.txt");
 	string name;
 	char input;
@@ -84,21 +87,24 @@ void check()
 		{
 			cout << "professor found" << endl;
 			cout << name << " " << Diff_level << endl;
-			main();
+			status = 1;
 			
 		}
-		else if (!(search_name != name))
-		{
-			cout<<"prof not found"<< endl;
-			cout<<"Please create a new one" << endl;
-			main();
-		}
 	}
+
+	if(status == 0)
+	{
+		cout<<"prof not found"<< endl;
+		cout<<"Please create a new one" << endl;
+	}
+			
 	
+	main();
 }
 
 void rate()
 {
+	status = 0;
 	int student_num = 1;
 	double new_Diff_level;
 	ifstream file("cooper_prof.txt");
@@ -124,14 +130,15 @@ void rate()
 		        newProf.changeDiff(new_Diff_level, student_num);
 			cout <<"new rating is: " <<newProf.Diff_level << endl;
 			linewrite(newProf.name, newProf.Diff_level);
-			main();
+			status = 1;
 		}
-		else if (!(name2rate != name))
-		{ 
-			cout<< "prof not found, plase create new one" << endl;
-			main();
-		}
+	}	
+ 	
+	if (status = 0)
+	{
+	cout<< "prof not found, plase create new one" << endl;
 	}
+	main();
 }
 
 
